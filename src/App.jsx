@@ -251,20 +251,20 @@ const pricingPlans = [
   },
   {
     name: 'Growth',
-    price: '$79',
+    price: '$49',
     cadence: '/month',
-    description: 'For production teams that need private delivery, automation, and stronger analytics.',
-    features: ['1 TB storage', '5 TB CDN bandwidth', 'Private buckets', 'Signed URLs', 'Realtime analytics', 'Webhook automation'],
+    description: 'Larger upload and delivery limits for growing teams.',
+    features: ['100 GB storage', '1000 GB CDN bandwidth', '1,000,000 API calls', '512 MB upload limit', '15 day trial', 'Private buckets'],
     cta: 'Choose Growth',
     featured: true
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    cadence: '',
-    description: 'For high-volume platforms, media products, and teams with compliance or migration needs.',
-    features: ['Custom storage and bandwidth', 'Dedicated onboarding', 'Advanced security review', 'Priority support', 'Migration planning'],
-    cta: 'Contact sales'
+    name: 'Business',
+    price: '$199',
+    cadence: '/month',
+    description: 'High-volume media plan with large upload support.',
+    features: ['500 GB storage', '5000 GB CDN bandwidth', '5,000,000 API calls', '2048 MB upload limit', '15 day trial', 'Priority support'],
+    cta: 'Choose Business'
   }
 ];
 
