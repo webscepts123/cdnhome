@@ -676,7 +676,7 @@ function AboutPage() {
           <InfoRow icon={ShieldCheck} title="Security-minded" text="Private access, audit trails, encryption, and signed URLs." />
         </div>
       </div>
-      <section className="section compact-section">
+      <section className="section compact-section reveal">
         <div className="section-heading">
           <p className="eyebrow">
             <ShieldCheck size={16} aria-hidden="true" />
@@ -688,6 +688,21 @@ function AboutPage() {
           <FeatureCard icon={Gauge} title="Performance" text="Fast asset delivery, strong cache behavior, and routing built for traffic spikes." />
           <FeatureCard icon={LockKeyhole} title="Control" text="Private buckets, signed URLs, scoped keys, and account-level policies for safer delivery." />
           <FeatureCard icon={Headphones} title="Support" text="Practical help for migrations, launch planning, production setup, and developer integration." />
+        </div>
+      </section>
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Workflow size={16} aria-hidden="true" />
+            How we help
+          </p>
+          <h2>From first upload to production delivery, the platform stays understandable.</h2>
+        </div>
+        <div className="feature-grid">
+          <FeatureCard icon={CloudUpload} title="Launch cleanly" text="Create buckets, upload assets, configure public or private delivery, and connect the CDN to your app." />
+          <FeatureCard icon={DatabaseZap} title="Optimize media" text="Prepare responsive image sizes, compressed variants, previews, posters, and delivery-ready media outputs." />
+          <FeatureCard icon={Activity} title="Operate with visibility" text="Monitor requests, bandwidth, cache behavior, failed delivery, and usage patterns as your audience grows." />
+          <FeatureCard icon={ServerCog} title="Scale workflows" text="Add API automation, cache purge rules, metadata updates, and webhooks when your product needs more control." />
         </div>
       </section>
       <PageCta title="Ready to plan your media delivery setup?" text="Share your storage, CDN, or migration goals and we will help map the right MediaCloudHub configuration." />
@@ -713,6 +728,20 @@ function ServicesPage() {
           </article>
         ))}
       </div>
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <ServerCog size={16} aria-hidden="true" />
+            Service workflow
+          </p>
+          <h2>Practical implementation support for teams moving real media traffic.</h2>
+        </div>
+        <div className="workflow-grid">
+          <FeatureCard icon={MapPin} title="Plan" text="Review storage volume, traffic regions, private files, current hosting, and expected delivery patterns." />
+          <FeatureCard icon={Boxes} title="Configure" text="Set up buckets, CDN paths, cache rules, signed URL behavior, and upload policies for your product." />
+          <FeatureCard icon={Gauge} title="Monitor" text="Use usage metrics and delivery signals to adjust limits, improve cache behavior, and prepare for growth." />
+        </div>
+      </section>
       <PageCta title="Need a managed CDN and storage layer?" text="We can help with new deployments, migrations from existing storage, and application-level media workflows." />
     </StandardPage>
   );
@@ -760,7 +789,7 @@ function PricingPage() {
           ))}
         </div>
       </section>
-      <section className="section compact-section">
+      <section className="section compact-section reveal">
         <div className="section-heading">
           <p className="eyebrow">
             <Gauge size={16} aria-hidden="true" />
@@ -795,6 +824,21 @@ function CdnPage() {
         <FeatureCard icon={LockKeyhole} title="Signed delivery" text="Protect paid, private, or time-limited files with tokenized links." />
         <FeatureCard icon={Activity} title="Traffic analytics" text="Track requests, bandwidth, hit ratio, edge latency, and errors." />
       </div>
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Globe2 size={16} aria-hidden="true" />
+            CDN capabilities
+          </p>
+          <h2>Deliver more than images through one controlled edge layer.</h2>
+        </div>
+        <div className="feature-grid">
+          <FeatureCard icon={Play} title="Video assets" text="Serve trailers, course previews, stream-ready files, posters, and protected playback assets." />
+          <FeatureCard icon={FileCode2} title="Static applications" text="Deliver JavaScript, CSS, downloads, documentation, and release files with cache control." />
+          <FeatureCard icon={ShieldCheck} title="Protected downloads" text="Use expiring URLs for paid files, member content, reports, exports, and private documents." />
+          <FeatureCard icon={Activity} title="Traffic insights" text="Understand where requests come from, how much bandwidth is used, and where delivery slows down." />
+        </div>
+      </section>
       <OperationsBand />
       <PageCta title="Speed up your existing media domain." text="Connect your assets to MediaCloudHub CDN delivery and get better caching, security, and visibility." />
     </StandardPage>
@@ -815,7 +859,7 @@ function StoragePage() {
         <FeatureCard icon={DatabaseZap} title="Transform pipeline" text="Generate responsive images, previews, compressed variants, and streamable video." />
         <FeatureCard icon={KeyRound} title="Access control" text="Use private buckets, scoped API keys, signed URLs, and role-based controls." />
       </div>
-      <section className="section compact-section">
+      <section className="section compact-section reveal">
         <div className="section-heading">
           <p className="eyebrow">
             <Boxes size={16} aria-hidden="true" />
@@ -828,6 +872,20 @@ function StoragePage() {
           <FeatureCard icon={Globe2} title="Public media libraries" text="Deliver images, videos, course files, marketplace media, and marketing assets globally." />
           <FeatureCard icon={ShieldCheck} title="Private files" text="Store sensitive uploads behind signed links, private buckets, and controlled API access." />
           <FeatureCard icon={Workflow} title="Automation" text="Trigger transforms, metadata updates, webhooks, and cache purges from your app workflow." />
+        </div>
+      </section>
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <KeyRound size={16} aria-hidden="true" />
+            Storage controls
+          </p>
+          <h2>Keep ownership, access, and delivery behavior clear as libraries grow.</h2>
+        </div>
+        <div className="workflow-grid">
+          <FeatureCard icon={Boxes} title="Bucket structure" text="Separate public assets, private uploads, generated variants, client projects, or app environments." />
+          <FeatureCard icon={LockKeyhole} title="Private access" text="Protect sensitive files with private buckets, signed routes, scoped API keys, and backend validation." />
+          <FeatureCard icon={DatabaseZap} title="Lifecycle planning" text="Organize originals, optimized versions, temporary files, archived assets, and cleanup rules." />
         </div>
       </section>
       <PageCta title="Move your media storage into a cleaner workflow." text="Tell us what you store today and how your users access it." />
@@ -845,7 +903,7 @@ function DevelopersPage() {
       imageAlt="Developer writing code for cloud services"
     >
       <DeveloperSection />
-      <section className="section compact-section">
+      <section className="section compact-section reveal">
         <div className="section-heading">
           <p className="eyebrow">
             <Workflow size={16} aria-hidden="true" />
@@ -857,6 +915,21 @@ function DevelopersPage() {
           <FeatureCard icon={ServerCog} title="Backend API" text="Issue signed upload sessions and manage files from your application server." />
           <FeatureCard icon={FileCode2} title="Frontend uploads" text="Let users upload directly through short-lived keys and validated upload rules." />
           <FeatureCard icon={Workflow} title="CI automation" text="Publish static assets, purge paths, and tag releases from your deployment pipeline." />
+        </div>
+      </section>
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Braces size={16} aria-hidden="true" />
+            API building blocks
+          </p>
+          <h2>Use simple primitives to build serious media workflows.</h2>
+        </div>
+        <div className="feature-grid">
+          <FeatureCard icon={CloudUpload} title="Upload sessions" text="Create controlled browser or server uploads with size limits, file validation, and destination rules." />
+          <FeatureCard icon={KeyRound} title="Scoped keys" text="Give frontend, backend, CI, and partner integrations only the permissions they need." />
+          <FeatureCard icon={Zap} title="Purge controls" text="Refresh changed content by URL, prefix, bucket, release tag, or automated deployment event." />
+          <FeatureCard icon={Activity} title="Events and logs" text="Follow upload status, delivery activity, transformation results, cache behavior, and error signals." />
         </div>
       </section>
       <PageCta title="Build against the MediaCloudHub platform." text="Use the login page to access your console, or contact us for API onboarding and integration planning." />
@@ -908,7 +981,14 @@ function ContactPage() {
           <InfoRow icon={Headphones} title="Support" text="Implementation help, migration planning, and account support." />
         </div>
       </div>
-      <section className="section compact-section">
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Headphones size={16} aria-hidden="true" />
+            What to include
+          </p>
+          <h2>Send the context that helps us recommend the right setup faster.</h2>
+        </div>
         <div className="feature-grid">
           <FeatureCard icon={ServerCog} title="Technical setup" text="Get help planning origins, buckets, cache rules, signing, and deployment flows." />
           <FeatureCard icon={Globe2} title="Migration planning" text="Move existing assets from local storage, object storage, or another CDN with fewer surprises." />
