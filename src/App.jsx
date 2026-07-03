@@ -13,7 +13,6 @@ import {
   Globe2,
   Headphones,
   KeyRound,
-  Layers3,
   LockKeyhole,
   Mail,
   MapPin,
@@ -48,12 +47,14 @@ const routes = {
 const baseUrl = 'https://mediacloudhub.com';
 const appLoginUrl = 'https://app.mediacloudhub.com/login';
 const appRegisterUrl = 'https://app.mediacloudhub.com/register';
+const brandIcon = '/brand/mediacloudhub-icon-color-256.png';
+const brandHorizontalLogo = '/brand/mediacloudhub-logo-color-horizontal.png';
 
 const seo = {
   home: {
     title: 'MediaCloudHub | CDN Storage, Media Optimization and Developer APIs',
     description: 'MediaCloudHub provides CDN storage, media optimization, signed URLs, private buckets, developer APIs, and global asset delivery for modern products.',
-    image: `${baseUrl}/og-image.jpg`
+    image: `${baseUrl}/og-image.png`
   },
   about: {
     title: 'About MediaCloudHub | CDN Storage for Media-Heavy Products',
@@ -368,7 +369,7 @@ function App() {
   useEffect(() => {
     const meta = seo[activeRoute] || seo.home;
     const canonical = `${baseUrl}${routePath(activeRoute)}`;
-    const image = meta.image || `${baseUrl}/og-image.jpg`;
+    const image = meta.image || `${baseUrl}/og-image.png`;
 
     document.title = meta.title;
     updateMetaTag('meta[name="description"]', 'content', meta.description);
@@ -450,6 +451,17 @@ function App() {
   );
 }
 
+function BrandLogo({ compact = false, className = '' }) {
+  return (
+    <span className={`brand-lockup ${compact ? 'brand-lockup-compact' : ''} ${className}`.trim()}>
+      <span className="brand-mark">
+        <img src={brandIcon} alt="" aria-hidden="true" />
+      </span>
+      <span className="brand-word">MediaCloudHub</span>
+    </span>
+  );
+}
+
 function Nav({ activeRoute, theme, onThemeToggle }) {
   const mainLinks = ['home', 'about', 'services', 'pricing', 'cdn', 'storage', 'developers', 'contact'];
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -464,10 +476,7 @@ function Nav({ activeRoute, theme, onThemeToggle }) {
     <nav className="nav-bar solid-nav" aria-label="Main navigation">
       <div className="nav-inner">
         <a className="brand" href={routePath('home')} onClick={(event) => handleNavClick('home', event)} aria-label="MediaCloudHub home">
-          <span className="brand-mark">
-            <Layers3 size={22} aria-hidden="true" />
-          </span>
-          <span>MediaCloudHub</span>
+          <BrandLogo />
         </a>
         <div className={`nav-links ${mobileOpen ? 'open' : ''}`}>
           {mainLinks.map((route) => (
@@ -582,6 +591,7 @@ function HomePage() {
           </figure>
         </div>
         <div className="hero-content animate-hero">
+          <img className="hero-brand-logo motion-item" src={brandHorizontalLogo} alt="MediaCloudHub" />
           <p className="eyebrow motion-item">
             <Zap size={16} aria-hidden="true" />
             CDN storage built for media-heavy products
@@ -1445,10 +1455,7 @@ function Footer() {
       <div className="footer">
         <div className="footer-brand">
           <a className="brand" href={routePath('home')} onClick={(event) => navigateRoute('home', event)}>
-            <span className="brand-mark">
-              <Layers3 size={22} aria-hidden="true" />
-            </span>
-            <span>MediaCloudHub</span>
+            <BrandLogo />
           </a>
           <p>Professional CDN storage, media optimization, and developer delivery tools for modern products.</p>
           <div className="footer-badges" aria-label="Platform highlights">
