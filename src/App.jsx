@@ -1380,7 +1380,7 @@ function StandardPage({ eyebrow, title, intro, image, imageAlt, children }) {
 function EveryPageSections() {
   return (
     <>
-      <section className="section universal-proof reveal">
+      <section className="section universal-proof">
         <div className="section-heading">
           <p className="eyebrow">
             <ShieldCheck size={16} aria-hidden="true" />
@@ -1389,17 +1389,17 @@ function EveryPageSections() {
           <h2>Designed for teams that need media to stay fast, private, and observable.</h2>
         </div>
         <div className="universal-proof-grid">
-          <article className="universal-proof-card motion-card">
+          <article className="universal-proof-card">
             <Gauge size={24} aria-hidden="true" />
             <h3>Predictable performance</h3>
             <p>Edge caching, purge controls, and delivery analytics help teams keep media responsive during launches and traffic spikes.</p>
           </article>
-          <article className="universal-proof-card motion-card" style={{ '--delay': '90ms' }}>
+          <article className="universal-proof-card">
             <LockKeyhole size={24} aria-hidden="true" />
             <h3>Controlled access</h3>
             <p>Private buckets, scoped API keys, signed URLs, and clear activity logs support safer uploads and protected delivery flows.</p>
           </article>
-          <article className="universal-proof-card motion-card" style={{ '--delay': '180ms' }}>
+          <article className="universal-proof-card">
             <Headphones size={24} aria-hidden="true" />
             <h3>Human support</h3>
             <p>Migration planning, production setup, and integration guidance are available when your workflow needs an extra pair of eyes.</p>
@@ -1407,7 +1407,7 @@ function EveryPageSections() {
         </div>
       </section>
 
-      <section className="universal-process reveal">
+      <section className="universal-process">
         <div className="universal-process-copy">
           <p className="eyebrow">
             <Workflow size={16} aria-hidden="true" />
@@ -1425,7 +1425,7 @@ function EveryPageSections() {
             ['02', 'Configure delivery', 'Create buckets, CDN routes, signing rules, cache policies, and upload paths.'],
             ['03', 'Launch with visibility', 'Monitor requests, cache hit ratio, bandwidth, errors, and user-facing latency.']
           ].map(([number, title, text], index) => (
-            <article className="universal-step motion-card" key={title} style={{ '--delay': `${index * 90}ms` }}>
+            <article className="universal-step" key={title}>
               <span>{number}</span>
               <h3>{title}</h3>
               <p>{text}</p>

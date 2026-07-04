@@ -894,7 +894,7 @@ h3 {
 }
 
 .page-hero {
-  padding: 148px 0 58px;
+  padding: 148px 0 34px;
 }
 
 .page-hero-with-image {
@@ -902,7 +902,7 @@ h3 {
   grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.78fr);
   gap: 48px;
   align-items: center;
-  padding-bottom: 72px;
+  padding-bottom: 42px;
 }
 
 .page-hero-copy {
@@ -1048,8 +1048,8 @@ h3 {
   margin: 0 auto;
 }
 
-.universal-proof {
-  padding-top: 76px;
+.section.universal-proof {
+  padding-top: 22px;
 }
 
 .universal-proof-grid {
@@ -1059,8 +1059,8 @@ h3 {
 }
 
 .universal-proof-card {
-  min-height: 250px;
-  padding: 28px;
+  min-height: 190px;
+  padding: 22px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
@@ -1092,8 +1092,8 @@ h3 {
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
   gap: 26px;
   align-items: stretch;
-  margin-top: 76px;
-  padding: 34px;
+  margin-top: 18px;
+  padding: 24px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
@@ -1108,11 +1108,11 @@ h3 {
 }
 
 .universal-process-copy h2 {
-  font-size: clamp(1.9rem, 3.2vw, 3.4rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.5rem);
 }
 
 .universal-process-copy p:last-child {
-  margin: 20px 0 0;
+  margin: 14px 0 0;
   color: var(--muted);
   line-height: 1.75;
 }
@@ -1126,7 +1126,7 @@ h3 {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 4px 16px;
-  padding: 20px;
+  padding: 16px;
   border: 1px solid rgba(19, 184, 170, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
@@ -3170,8 +3170,8 @@ code {
   }
 
   .universal-process {
-    margin-top: 84px;
-    padding: 28px;
+    margin-top: 18px;
+    padding: 22px;
   }
 
   .api-panel-header,
