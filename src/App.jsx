@@ -50,6 +50,7 @@ const appLoginUrl = 'https://app.mediacloudhub.com/login';
 const appRegisterUrl = 'https://app.mediacloudhub.com/register';
 const brandIcon = '/brand/mediacloudhub-icon-color-256.png';
 const brandHorizontalLogo = '/brand/mediacloudhub-logo-color-horizontal.png';
+const wordpressPostsUrl = 'https://mediacloudhub.com/news/wp-json/wp/v2/posts?_embed=1&per_page=3';
 
 const seo = {
   home: {
@@ -131,38 +132,76 @@ const features = [
 
 const services = [
   {
+    route: 'global-cdn-acceleration',
     title: 'Global CDN acceleration',
-    text: 'Deliver websites, applications, images, video, and downloads through edge caching, compression, and fast route selection.'
+    text: 'Deliver websites, applications, images, video, and downloads through edge caching, compression, and fast route selection.',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'object-and-media-storage',
     title: 'Object and media storage',
-    text: 'Store customer uploads, static assets, documents, and transformed media in organized buckets with lifecycle controls.'
+    text: 'Store customer uploads, static assets, documents, and transformed media in organized buckets with lifecycle controls.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'image-and-video-optimization',
     title: 'Image and video optimization',
-    text: 'Generate responsive image sizes, compressed variants, posters, previews, and streaming-ready media outputs.'
+    text: 'Generate responsive image sizes, compressed variants, posters, previews, and streaming-ready media outputs.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'signed-url-delivery',
     title: 'Signed URL delivery',
-    text: 'Protect private content, paid downloads, learning files, and member-only media with expiring tokenized links.'
+    text: 'Protect private content, paid downloads, learning files, and member-only media with expiring tokenized links.',
+    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'private-bucket-access',
     title: 'Private bucket access',
-    text: 'Keep sensitive files away from public delivery while still allowing controlled API, admin, and app access.'
+    text: 'Keep sensitive files away from public delivery while still allowing controlled API, admin, and app access.',
+    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'realtime-traffic-analytics',
     title: 'Realtime traffic analytics',
-    text: 'Monitor requests, bandwidth, cache hit ratio, geographic demand, edge latency, and delivery errors.'
+    text: 'Monitor requests, bandwidth, cache hit ratio, geographic demand, edge latency, and delivery errors.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'cache-purge-automation',
     title: 'Cache purge automation',
-    text: 'Clear stale files by URL, prefix, bucket, tag, or deployment event when your product content changes.'
+    text: 'Clear stale files by URL, prefix, bucket, tag, or deployment event when your product content changes.',
+    image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1600&q=82'
   },
   {
+    route: 'developer-api-integration',
     title: 'Developer API integration',
-    text: 'Connect uploads, transforms, asset metadata, access policies, and delivery events into your application workflow.'
+    text: 'Connect uploads, transforms, asset metadata, access policies, and delivery events into your application workflow.',
+    image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1600&q=82'
   }
 ];
+
+const serviceDetailsByRoute = Object.fromEntries(
+  services.map((service) => [
+    service.route,
+    {
+      ...service,
+      seoTitle: `${service.title} | MediaCloudHub Services`,
+      seoDescription: `${service.text} Learn how MediaCloudHub helps teams implement ${service.title.toLowerCase()} for production media workflows.`
+    }
+  ])
+);
+
+const serviceSeo = Object.fromEntries(
+  services.map((service) => [
+    service.route,
+    {
+      title: `${service.title} | MediaCloudHub Services`,
+      description: `${service.text} Learn how MediaCloudHub helps teams implement ${service.title.toLowerCase()} for production media workflows.`,
+      image: `${baseUrl}/og-image.png`
+    }
+  ])
+);
 
 const workflow = [
   { icon: CloudUpload, title: 'Upload', detail: 'Push assets from dashboard, API, CLI, or CI workflows.' },
@@ -421,9 +460,12 @@ function getRoute() {
   if (routes[pathRoute]) {
     return pathRoute;
   }
+  if (serviceDetailsByRoute[pathRoute]) {
+    return pathRoute;
+  }
 
   const hash = window.location.hash.replace('#/', '').replace('#', '');
-  return routes[hash] ? hash : 'home';
+  return routes[hash] || serviceDetailsByRoute[hash] ? hash : 'home';
 }
 
 function routePath(route) {
@@ -445,6 +487,18 @@ function copyToClipboard(text) {
   }
 
   navigator.clipboard.writeText(text);
+}
+
+function cleanWordPressText(value = '') {
+  const withoutTags = value.replace(/<[^>]*>/g, ' ');
+  const textarea = typeof document === 'undefined' ? null : document.createElement('textarea');
+
+  if (!textarea) {
+    return withoutTags.replace(/\s+/g, ' ').trim();
+  }
+
+  textarea.innerHTML = withoutTags;
+  return textarea.value.replace(/\s+/g, ' ').trim();
 }
 
 function updateMetaTag(selector, attribute, value) {
@@ -506,7 +560,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const meta = seo[activeRoute] || seo.home;
+    const meta = seo[activeRoute] || serviceSeo[activeRoute] || seo.home;
     const canonical = `${baseUrl}${routePath(activeRoute)}`;
     const image = meta.image || `${baseUrl}/og-image.png`;
 
@@ -585,6 +639,7 @@ function App() {
       {activeRoute === 'terms' && <LegalPage type="terms" />}
       {activeRoute === 'privacy' && <LegalPage type="privacy" />}
       {activeRoute === 'conditions' && <LegalPage type="conditions" />}
+      {serviceDetailsByRoute[activeRoute] && <ServiceDetailPage service={serviceDetailsByRoute[activeRoute]} />}
       <Footer />
     </main>
   );
@@ -605,6 +660,7 @@ function Nav({ activeRoute, theme, onThemeToggle }) {
   const mainLinks = ['home', 'about', 'services', 'pricing', 'cdn', 'storage', 'developers', 'contact'];
   const [mobileOpen, setMobileOpen] = useState(false);
   const ThemeIcon = theme === 'dark' ? Sun : Moon;
+  const servicesActive = activeRoute === 'services' || Boolean(serviceDetailsByRoute[activeRoute]);
 
   const handleNavClick = (route, event) => {
     setMobileOpen(false);
@@ -621,7 +677,7 @@ function Nav({ activeRoute, theme, onThemeToggle }) {
           {mainLinks.map((route) => (
             route === 'services' ? (
               <div className="services-nav-item" key={route}>
-                <a className={activeRoute === route ? 'active' : ''} href={routePath(route)} onClick={(event) => handleNavClick(route, event)}>
+                <a className={servicesActive ? 'active' : ''} href={routePath(route)} onClick={(event) => handleNavClick(route, event)}>
                   {routes[route]}
                   <ChevronRight size={15} aria-hidden="true" />
                 </a>
@@ -643,7 +699,7 @@ function Nav({ activeRoute, theme, onThemeToggle }) {
                       const icons = [Globe2, CloudUpload, DatabaseZap, LockKeyhole, ShieldCheck, Activity];
                       const Icon = icons[index];
                       return (
-                        <a href={routePath('services')} onClick={(event) => handleNavClick('services', event)} key={service.title}>
+                        <a href={routePath(service.route)} onClick={(event) => handleNavClick(service.route, event)} key={service.title}>
                           <Icon size={20} aria-hidden="true" />
                           <span>
                             <strong>{service.title}</strong>
@@ -758,6 +814,7 @@ function HomePage() {
       <EveryPageSections />
       <HomeInteractiveShowcase />
       <FeatureSection />
+      <WordPressBlogSection />
       <HomeUseCases />
       <DeveloperSection />
       <WorkflowSection />
@@ -871,11 +928,15 @@ function ServicesPage() {
     >
       <div className="service-grid">
         {services.map((service) => (
-          <article className="service-card" key={service.title}>
+          <a className="service-card" href={routePath(service.route)} onClick={(event) => navigateRoute(service.route, event)} key={service.title}>
             <Check size={20} aria-hidden="true" />
             <h3>{service.title}</h3>
             <p>{service.text}</p>
-          </article>
+            <span className="service-card-link">
+              Learn more
+              <ArrowRight size={16} aria-hidden="true" />
+            </span>
+          </a>
         ))}
       </div>
       <section className="section compact-section reveal">
@@ -893,6 +954,51 @@ function ServicesPage() {
         </div>
       </section>
       <PageCta title="Need a managed CDN and storage layer?" text="We can help with new deployments, migrations from existing storage, and application-level media workflows." />
+    </StandardPage>
+  );
+}
+
+function ServiceDetailPage({ service }) {
+  return (
+    <StandardPage
+      eyebrow="Service"
+      title={service.title}
+      intro={service.text}
+      image={service.image}
+      imageAlt={`${service.title} service illustration`}
+    >
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <ServerCog size={16} aria-hidden="true" />
+            Service details
+          </p>
+          <h2>Everything needed to make {service.title.toLowerCase()} production-ready.</h2>
+        </div>
+        <div className="feature-grid">
+          <FeatureCard icon={MapPin} title="Plan the rollout" text="Map current assets, traffic regions, access rules, delivery domains, and the operational goals for this service." />
+          <FeatureCard icon={Boxes} title="Configure cleanly" text="Set up buckets, delivery paths, cache behavior, metadata, permissions, and workflow rules around your app." />
+          <FeatureCard icon={ShieldCheck} title="Secure access" text="Use scoped keys, private delivery, signed URLs, and audit-friendly controls where your media requires protection." />
+          <FeatureCard icon={Activity} title="Measure results" text="Track requests, bandwidth, delivery behavior, cache performance, and errors so the workflow stays visible." />
+        </div>
+      </section>
+
+      <section className="section compact-section reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Workflow size={16} aria-hidden="true" />
+            Implementation
+          </p>
+          <h2>A simple path from setup to live media delivery.</h2>
+        </div>
+        <div className="workflow-grid">
+          <FeatureCard icon={CloudUpload} title="Connect assets" text="Upload existing media, import remote files, or connect application upload flows to MediaCloudHub." />
+          <FeatureCard icon={Gauge} title="Tune delivery" text="Apply cache rules, compression, URL behavior, purge workflows, and region-aware delivery settings." />
+          <FeatureCard icon={Code2} title="Automate with APIs" text="Use API calls, webhooks, metadata updates, and deployment hooks to keep media operations repeatable." />
+        </div>
+      </section>
+
+      <PageCta title={`Need help with ${service.title.toLowerCase()}?`} text="Tell us about your current media setup and we will help choose the right service configuration." />
     </StandardPage>
   );
 }
@@ -1526,6 +1632,105 @@ function FeatureCard({ icon: Icon, title, text, index = 0 }) {
       <h3>{title}</h3>
       <p>{text}</p>
     </article>
+  );
+}
+
+function WordPressBlogSection() {
+  const fallbackPosts = [
+    {
+      id: 'fallback-1',
+      title: 'Planning a faster media delivery workflow',
+      excerpt: 'Learn how product teams can prepare uploads, cache rules, and access policies before traffic grows.',
+      link: 'https://mediacloudhub.com/news/'
+    },
+    {
+      id: 'fallback-2',
+      title: 'Using signed URLs for private media',
+      excerpt: 'Protect member files, downloads, and app assets with tokenized links and private delivery rules.',
+      link: 'https://mediacloudhub.com/news/'
+    },
+    {
+      id: 'fallback-3',
+      title: 'What to monitor in CDN storage',
+      excerpt: 'Track bandwidth, cache hit ratio, delivery errors, and asset activity across production media workflows.',
+      link: 'https://mediacloudhub.com/news/'
+    }
+  ];
+  const [posts, setPosts] = useState(fallbackPosts);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch(wordpressPostsUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load WordPress posts');
+        }
+
+        return response.json();
+      })
+      .then((items) => {
+        if (cancelled || !Array.isArray(items) || items.length === 0) {
+          return;
+        }
+
+        setPosts(
+          items.slice(0, 3).map((post) => ({
+            id: post.id,
+            title: cleanWordPressText(post.title?.rendered || 'MediaCloudHub news'),
+            excerpt: cleanWordPressText(post.excerpt?.rendered || '').slice(0, 150),
+            link: post.link || 'https://mediacloudhub.com/news/',
+            image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+          }))
+        );
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setPosts(fallbackPosts);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <section className="section blog-section reveal" aria-label="Latest MediaCloudHub news">
+      <div className="section-heading blog-heading">
+        <div>
+          <p className="eyebrow">
+            <FileCode2 size={16} aria-hidden="true" />
+            Latest news
+          </p>
+          <h2>Insights from the MediaCloudHub blog.</h2>
+        </div>
+        <a className="secondary-button blog-all-link" href="https://mediacloudhub.com/news/">
+          View all news
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+      </div>
+      <div className="blog-grid">
+        {posts.map((post, index) => (
+          <article className="blog-card motion-card" key={post.id} style={{ '--delay': `${index * 90}ms` }}>
+            {post.image && (
+              <figure>
+                <img src={post.image} alt="" loading="lazy" />
+              </figure>
+            )}
+            <div>
+              <span>Article</span>
+              <h3>{post.title}</h3>
+              <p>{post.excerpt}</p>
+              <a href={post.link}>
+                Learn more
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
