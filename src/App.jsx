@@ -7,6 +7,7 @@ import {
   ChevronRight,
   CloudUpload,
   Code2,
+  Copy,
   DatabaseZap,
   FileCode2,
   Gauge,
@@ -281,6 +282,136 @@ const codeSample = `const media = await mch.files.upload({
 
 return media.cdn_url;`;
 
+const apiLanguages = [
+  { id: 'php', badge: 'PHP', name: 'PHP', detail: 'cURL', install: 'Built into PHP - no install needed' },
+  { id: 'python', badge: 'PY', name: 'Python', detail: 'requests', install: 'pip install requests' },
+  { id: 'java', badge: 'JV', name: 'Java', detail: 'java.net.http', install: 'Built into JDK 11+ - no install needed' },
+  { id: 'node', badge: 'JS', name: 'Node.js', detail: 'fetch', install: 'Built into Node 18+ - no install needed' }
+];
+
+const apiDocsNav = ['Quick Start', 'Authentication', 'Upload Media', 'List & Filter', 'Get & Delete', 'Media URLs', 'Error Handling'];
+
+const quickStartSamples = {
+  php: `<?php
+// No SDK required - plain cURL against the REST API.
+$apiKey = getenv('MEDIACLOUDHUB_API_KEY'); // pk_live_...
+$base = 'https://app.mediacloudhub.com/api/v1';
+
+$ch = curl_init("$base/media/upload");
+curl_setopt_array($ch, [
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HTTPHEADER => ["Authorization: Bearer $apiKey"],
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => ['file' => new CURLFile('/path/to/photo.jpg')],
+]);
+
+$response = json_decode(curl_exec($ch), true);
+curl_close($ch);
+
+echo $response['id'];  // 42
+echo $response['url']; // "https://cdn.yoursite.com/media/42/stream"`,
+  python: `import os
+import requests
+
+api_key = os.environ["MEDIACLOUDHUB_API_KEY"]
+base = "https://app.mediacloudhub.com/api/v1"
+
+with open("/path/to/photo.jpg", "rb") as media_file:
+    response = requests.post(
+        f"{base}/media/upload",
+        headers={"Authorization": f"Bearer {api_key}"},
+        files={"file": media_file},
+    )
+
+media = response.json()
+print(media["id"])
+print(media["url"])`,
+  java: `HttpClient client = HttpClient.newHttpClient();
+String apiKey = System.getenv("MEDIACLOUDHUB_API_KEY");
+
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://app.mediacloudhub.com/api/v1/media"))
+    .header("Authorization", "Bearer " + apiKey)
+    .GET()
+    .build();
+
+HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+System.out.println(response.body());`,
+  node: `const apiKey = process.env.MEDIACLOUDHUB_API_KEY;
+const form = new FormData();
+form.append('file', fileInput.files[0]);
+
+const response = await fetch('https://app.mediacloudhub.com/api/v1/media/upload', {
+  method: 'POST',
+  headers: {
+    Authorization: \`Bearer \${apiKey}\`
+  },
+  body: form
+});
+
+const media = await response.json();
+console.log(media.url);`
+};
+
+const apiEndpoints = [
+  ['GET', '/api/v1/account', 'Get your account, plan, and storage usage'],
+  ['GET', '/api/v1/media', 'List media - ?type=image&q=name&page=1'],
+  ['POST', '/api/v1/media/upload', 'Upload a file with multipart/form-data using the file field'],
+  ['POST', '/api/v1/media/import-url', 'Import a remote file using a JSON body with url'],
+  ['GET', '/api/v1/media/{id}', 'Get a single media item by ID'],
+  ['PATCH', '/api/v1/media/{id}', 'Update filename, alt_text, folder, or metadata'],
+  ['DELETE', '/api/v1/media/{id}', 'Delete a media item permanently'],
+  ['GET', '/api/v1/folders', 'List distinct folder names in your library']
+];
+
+const sdkExamples = {
+  php: {
+    label: 'Laravel / PHP',
+    install: 'composer require mediacloud/php-sdk',
+    code: `use MediaCloud\\Client;
+
+$client = new Client('pk_live************************5XZR');
+
+$media = $client->media()->list();
+foreach ($media->items as $item) {
+    echo $item->cdn_url;
+}`
+  },
+  python: {
+    label: 'Python',
+    install: 'pip install mediacloudhub',
+    code: `from mediacloudhub import Client
+
+client = Client("pk_live************************5XZR")
+
+media = client.media.list(type="image")
+for item in media.items:
+    print(item.cdn_url)`
+  },
+  java: {
+    label: 'Java',
+    install: 'implementation "com.mediacloudhub:media-sdk:1.0.0"',
+    code: `MediaCloudClient client = new MediaCloudClient("pk_live************************5XZR");
+
+MediaList media = client.media().list();
+for (MediaItem item : media.items()) {
+    System.out.println(item.cdnUrl());
+}`
+  },
+  node: {
+    label: 'Node.js',
+    install: 'npm install @mediacloudhub/sdk',
+    code: `import { MediaCloudHub } from '@mediacloudhub/sdk';
+
+const client = new MediaCloudHub('pk_live************************5XZR');
+const media = await client.media.list({ type: 'image' });
+
+for (const item of media.items) {
+  console.log(item.cdn_url);
+}`
+  }
+};
+
 function getRoute() {
   if (typeof window === 'undefined') {
     return 'home';
@@ -306,6 +437,14 @@ function navigateRoute(route, event) {
 
   window.history.pushState({}, '', routePath(route));
   window.dispatchEvent(new Event('popstate'));
+}
+
+function copyToClipboard(text) {
+  if (typeof navigator === 'undefined' || !navigator.clipboard) {
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
 }
 
 function updateMetaTag(selector, attribute, value) {
@@ -616,6 +755,7 @@ function HomePage() {
 
       <Metrics />
       <HomeImageBand />
+      <EveryPageSections />
       <HomeInteractiveShowcase />
       <FeatureSection />
       <HomeUseCases />
@@ -913,6 +1053,7 @@ function DevelopersPage() {
       imageAlt="Developer writing code for cloud services"
     >
       <DeveloperSection />
+      <ApiDocumentationSection />
       <section className="section compact-section reveal">
         <div className="section-heading">
           <p className="eyebrow">
@@ -944,6 +1085,132 @@ function DevelopersPage() {
       </section>
       <PageCta title="Build against the MediaCloudHub platform." text="Use the login page to access your console, or contact us for API onboarding and integration planning." />
     </StandardPage>
+  );
+}
+
+function ApiDocumentationSection() {
+  const [activeLanguage, setActiveLanguage] = useState(apiLanguages[0].id);
+  const activeSdk = sdkExamples[activeLanguage];
+
+  return (
+    <section className="api-docs-section reveal" id="api-docs">
+      <div className="api-docs-heading">
+        <p className="eyebrow">
+          <Braces size={16} aria-hidden="true" />
+          API documentation
+        </p>
+        <h2>Upload, list, secure, and deliver media from predictable REST endpoints.</h2>
+        <p>
+          Use plain HTTP or a lightweight SDK to connect MediaCloudHub to your app, admin panel,
+          upload workflow, or deployment pipeline.
+        </p>
+      </div>
+
+      <div className="api-language-grid" role="tablist" aria-label="API language examples">
+        {apiLanguages.map((language) => (
+          <button
+            className={`api-language-card ${activeLanguage === language.id ? 'active' : ''}`}
+            key={language.id}
+            type="button"
+            role="tab"
+            aria-selected={activeLanguage === language.id}
+            onClick={() => setActiveLanguage(language.id)}
+          >
+            <span className="language-badge">{language.badge}</span>
+            <span>
+              <strong>{language.name}</strong>
+              <small>{language.detail}</small>
+              <em>{language.install}</em>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div className="api-code-layout">
+        <aside className="api-docs-nav" aria-label="API documentation sections">
+          <span>{apiLanguages.find((language) => language.id === activeLanguage)?.name}</span>
+          {apiDocsNav.map((item, index) => (
+            <a className={index === 0 ? 'active' : ''} href="#api-docs" key={item}>
+              {item}
+            </a>
+          ))}
+        </aside>
+
+        <div className="api-code-panel" role="tabpanel">
+          <div className="api-panel-header">
+            <div>
+              <span className="panel-dot" />
+              <h3>Quick Start</h3>
+              <small>{apiLanguages.find((language) => language.id === activeLanguage)?.name}</small>
+            </div>
+            <button type="button" onClick={() => copyToClipboard(quickStartSamples[activeLanguage])}>
+              <Copy size={15} aria-hidden="true" />
+              Copy
+            </button>
+          </div>
+          <pre><code>{quickStartSamples[activeLanguage]}</code></pre>
+        </div>
+      </div>
+
+      <div className="api-endpoints-panel">
+        <div className="api-panel-title">
+          <span className="language-badge">API</span>
+          <div>
+            <h3>Endpoints</h3>
+            <p>Base URL: <code>https://app.mediacloudhub.com/api/v1</code> · Auth: <code>Authorization: Bearer &lt;api_key&gt;</code></p>
+          </div>
+        </div>
+        <div className="endpoint-list">
+          {apiEndpoints.map(([method, path, description]) => (
+            <div className="endpoint-row" key={`${method}-${path}`}>
+              <span className={`method method-${method.toLowerCase()}`}>{method}</span>
+              <code>{path}</code>
+              <p>{description}</p>
+              <button type="button" onClick={() => copyToClipboard(path)}>copy</button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="sdk-panel">
+        <div className="sdk-panel-header">
+          <div>
+            <h3>Use with SDK</h3>
+            <p>Quick start - authenticate and list your media.</p>
+          </div>
+          <a href="#api-docs">
+            Full Docs
+            <ArrowRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="sdk-tabs" role="tablist" aria-label="SDK examples">
+          {Object.entries(sdkExamples).map(([id, sdk]) => (
+            <button
+              className={activeLanguage === id ? 'active' : ''}
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={activeLanguage === id}
+              onClick={() => setActiveLanguage(id)}
+            >
+              {sdk.label}
+            </button>
+          ))}
+        </div>
+        <div className="sdk-install-row">
+          <strong>Install</strong>
+          <code>{activeSdk.install}</code>
+          <button type="button" onClick={() => copyToClipboard(activeSdk.install)}>copy</button>
+        </div>
+        <div className="sdk-code-block">
+          <button type="button" onClick={() => copyToClipboard(activeSdk.code)}>
+            <Copy size={15} aria-hidden="true" />
+            Copy
+          </button>
+          <pre><code>{activeSdk.code}</code></pre>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1104,7 +1371,68 @@ function StandardPage({ eyebrow, title, intro, image, imageAlt, children }) {
           </figure>
         )}
       </section>
+      <EveryPageSections />
       {children}
+    </>
+  );
+}
+
+function EveryPageSections() {
+  return (
+    <>
+      <section className="section universal-proof reveal">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <ShieldCheck size={16} aria-hidden="true" />
+            Platform confidence
+          </p>
+          <h2>Designed for teams that need media to stay fast, private, and observable.</h2>
+        </div>
+        <div className="universal-proof-grid">
+          <article className="universal-proof-card motion-card">
+            <Gauge size={24} aria-hidden="true" />
+            <h3>Predictable performance</h3>
+            <p>Edge caching, purge controls, and delivery analytics help teams keep media responsive during launches and traffic spikes.</p>
+          </article>
+          <article className="universal-proof-card motion-card" style={{ '--delay': '90ms' }}>
+            <LockKeyhole size={24} aria-hidden="true" />
+            <h3>Controlled access</h3>
+            <p>Private buckets, scoped API keys, signed URLs, and clear activity logs support safer uploads and protected delivery flows.</p>
+          </article>
+          <article className="universal-proof-card motion-card" style={{ '--delay': '180ms' }}>
+            <Headphones size={24} aria-hidden="true" />
+            <h3>Human support</h3>
+            <p>Migration planning, production setup, and integration guidance are available when your workflow needs an extra pair of eyes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="universal-process reveal">
+        <div className="universal-process-copy">
+          <p className="eyebrow">
+            <Workflow size={16} aria-hidden="true" />
+            Implementation path
+          </p>
+          <h2>Move from current storage to production CDN delivery with a clear rollout.</h2>
+          <p>
+            Start with the assets and access rules you already have, then connect uploads, cache behavior,
+            signed delivery, and analytics in small steps your team can verify.
+          </p>
+        </div>
+        <div className="universal-process-steps">
+          {[
+            ['01', 'Map assets', 'Review file types, regions, access rules, bandwidth, and existing origins.'],
+            ['02', 'Configure delivery', 'Create buckets, CDN routes, signing rules, cache policies, and upload paths.'],
+            ['03', 'Launch with visibility', 'Monitor requests, cache hit ratio, bandwidth, errors, and user-facing latency.']
+          ].map(([number, title, text], index) => (
+            <article className="universal-step motion-card" key={title} style={{ '--delay': `${index * 90}ms` }}>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
     </>
   );
 }
