@@ -59,32 +59,39 @@ const seo = {
     image: `${baseUrl}/og-image.png`
   },
   about: {
-    title: 'About MediaCloudHub | CDN Storage for Media-Heavy Products',
-    description: 'Learn about MediaCloudHub, a CDN storage platform helping developers store, optimize, secure, and deliver media at scale.'
+    title: 'About MediaCloudHub | Developer-First Media Platform',
+    description: 'Discover MediaCloudHub, a developer-first platform built for secure media storage, image optimization, CDN delivery, analytics and scalable application media.',
+    keywords: 'developer media platform'
   },
   services: {
-    title: 'Services | CDN, Cloud Storage and Media Optimization',
-    description: 'Explore MediaCloudHub services for global CDN acceleration, cloud media storage, signed delivery, image optimization, analytics, and API integration.'
+    title: 'Media CDN, Storage & Optimization Services | MediaCloudHub',
+    description: 'Explore MediaCloudHub services for media storage, CDN acceleration, image and video optimization, signed URLs, private access and analytics.',
+    keywords: 'media CDN services'
   },
   pricing: {
-    title: 'Pricing | MediaCloudHub CDN Storage Plans',
-    description: 'Compare MediaCloudHub pricing plans for CDN storage, private buckets, signed URLs, media optimization, bandwidth, and developer APIs.'
+    title: 'Media CDN, Storage & Optimization Pricing | MediaCloudHub',
+    description: 'Explore MediaCloudHub pricing for media storage, CDN bandwidth, image optimization, secure delivery and developer APIs. Choose a plan that scales with you.',
+    keywords: 'media CDN pricing'
   },
   cdn: {
-    title: 'CDN Network | Fast Global Media Delivery',
-    description: 'Deliver images, video, static files, downloads, and application assets through MediaCloudHub global CDN with cache controls and analytics.'
+    title: 'Media CDN for Images, Video & Application Assets | MediaCloudHub',
+    description: "Deliver images, videos and application assets faster with MediaCloudHub's global media CDN, edge caching, secure delivery and developer APIs.",
+    keywords: 'media CDN'
   },
   storage: {
-    title: 'Cloud Storage | Secure Media and Object Storage',
-    description: 'Store customer uploads, product assets, private files, and transformed media in organized MediaCloudHub cloud storage buckets.'
+    title: 'Cloud Media Storage for Images, Video & Files | MediaCloudHub',
+    description: 'Securely store images, videos, files and application assets with scalable cloud media storage designed for developers, SaaS and digital platforms.',
+    keywords: 'cloud media storage'
   },
   developers: {
-    title: 'Developers | MediaCloudHub APIs and Automation',
-    description: 'Use MediaCloudHub developer APIs for uploads, signed URLs, metadata, media transforms, cache purges, webhooks, and delivery automation.'
+    title: 'Media API, CDN API & Cloud Storage for Developers | MediaCloudHub',
+    description: 'Build with MediaCloudHub APIs for media uploads, storage, transformations, signed URLs and global CDN delivery across modern applications.',
+    keywords: 'media API'
   },
   contact: {
-    title: 'Contact MediaCloudHub | CDN Storage Support and Sales',
-    description: 'Contact MediaCloudHub for CDN storage consultation, media migration planning, developer integration, sales, and technical support.'
+    title: 'Contact MediaCloudHub | CDN, Storage & API Support',
+    description: 'Contact MediaCloudHub for CDN, media storage, image optimization, API integration, migration assistance and technical support.',
+    keywords: 'MediaCloudHub support'
   },
   terms: {
     title: 'Terms of Service | MediaCloudHub',
@@ -135,37 +142,55 @@ const services = [
     route: 'global-cdn-acceleration',
     title: 'Global CDN acceleration',
     text: 'Deliver websites, applications, images, video, and downloads through edge caching, compression, and fast route selection.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Global CDN Acceleration for Faster Media Delivery | MediaCloudHub',
+    seoDescription: "Accelerate images, videos and application assets worldwide with MediaCloudHub's global CDN, edge caching and high-performance media delivery.",
+    seoKeyword: 'global CDN acceleration'
   },
   {
     route: 'object-and-media-storage',
     title: 'Object and media storage',
     text: 'Store customer uploads, static assets, documents, and transformed media in organized buckets with lifecycle controls.',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Object & Media Storage for Developers | MediaCloudHub',
+    seoDescription: 'Store images, videos, documents and application assets with secure, scalable object and media storage designed for developers and modern applications.',
+    seoKeyword: 'media storage'
   },
   {
     route: 'image-and-video-optimization',
     title: 'Image and video optimization',
     text: 'Generate responsive image sizes, compressed variants, posters, previews, and streaming-ready media outputs.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Image & Video Optimization API & CDN | MediaCloudHub',
+    seoDescription: "Compress, resize, transform and optimize images and videos for faster delivery using MediaCloudHub's developer-ready optimization platform and CDN.",
+    seoKeyword: 'image and video optimization'
   },
   {
     route: 'signed-url-delivery',
     title: 'Signed URL delivery',
     text: 'Protect private content, paid downloads, learning files, and member-only media with expiring tokenized links.',
-    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Signed URL CDN for Secure Media Delivery | MediaCloudHub',
+    seoDescription: 'Protect private images, videos and files with expiring signed URLs and secure CDN delivery built for applications, SaaS platforms and developers.',
+    seoKeyword: 'signed URL CDN'
   },
   {
     route: 'private-bucket-access',
     title: 'Private bucket access',
     text: 'Keep sensitive files away from public delivery while still allowing controlled API, admin, and app access.',
-    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Private Media Storage & Secure Bucket Access | MediaCloudHub',
+    seoDescription: 'Secure private media and application assets with controlled bucket access, signed delivery and developer-friendly storage from MediaCloudHub.',
+    seoKeyword: 'private media storage'
   },
   {
     route: 'realtime-traffic-analytics',
     title: 'Realtime traffic analytics',
     text: 'Monitor requests, bandwidth, cache hit ratio, geographic demand, edge latency, and delivery errors.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=82',
+    seoTitle: 'Real-Time CDN & Media Traffic Analytics | MediaCloudHub',
+    seoDescription: 'Monitor media traffic, CDN delivery and bandwidth with real-time analytics. Understand usage and optimize application media performance with MediaCloudHub.',
+    seoKeyword: 'CDN analytics'
   },
   {
     route: 'cache-purge-automation',
@@ -196,8 +221,9 @@ const serviceSeo = Object.fromEntries(
   services.map((service) => [
     service.route,
     {
-      title: `${service.title} | MediaCloudHub Services`,
-      description: `${service.text} Learn how MediaCloudHub helps teams implement ${service.title.toLowerCase()} for production media workflows.`,
+      title: service.seoTitle || `${service.title} | MediaCloudHub Services`,
+      description: service.seoDescription || `${service.text} Learn how MediaCloudHub helps teams implement ${service.title.toLowerCase()} for production media workflows.`,
+      keywords: service.seoKeyword,
       image: `${baseUrl}/og-image.png`
     }
   ])
@@ -566,6 +592,11 @@ function App() {
 
     document.title = meta.title;
     updateMetaTag('meta[name="description"]', 'content', meta.description);
+    if (meta.keywords) {
+      updateMetaTag('meta[name="keywords"]', 'content', meta.keywords);
+    } else {
+      document.head.querySelector('meta[name="keywords"]')?.remove();
+    }
     updateMetaTag('meta[name="robots"]', 'content', 'index, follow');
     updateMetaTag('meta[property="og:title"]', 'content', meta.title);
     updateMetaTag('meta[property="og:description"]', 'content', meta.description);
